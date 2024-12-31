@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int helper(vector<int> &dp, vector<int> days, vector<int> costs, int n) {
+    int helper(vector<int> &dp, vector<int>& days, vector<int> &costs, int n) {
         if (n == days.size())
             return 0;
 
@@ -20,11 +20,8 @@ public:
         dp[n] = min({c1, c2 , c3});
         return dp[n];
     }
-    int mincostTickets(vector<int> days, vector<int> costs) {
+    int mincostTickets(vector<int>& days, vector<int>& costs) {
        vector<int> dp(days.size(), -1);
        return helper(dp, days, costs, 0);
     }
 };
-
-//lemme think
-// Use what you think then will worlok
