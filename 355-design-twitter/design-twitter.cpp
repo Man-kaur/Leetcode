@@ -1,37 +1,37 @@
 class Twitter {
-    unordered_map<int, unordered_set<int> > following; // user_id -> people he follows
-    unordered_map<int, vector<pair<int, int>> > tweets; // user_id -> {time, tweet_id}
-    int timestamp;
+    unordered_map<int, set<int>> following;   // userId -> followings
+    unordered_map<int , vector<pair<int,int>>> tweets;  // userId -> {time, tweetId}
+    int time;
 public:
+
     Twitter() {
-        timestamp = 0;        
+        time = 0;
     }
     
     void postTweet(int userId, int tweetId) {
-        tweets[userId].push_back({timestamp++, tweetId});
+        tweets[userId].push_back({time++, tweetId});
     }
     
     vector<int> getNewsFeed(int userId) {
-        priority_queue<pair<int, int>> pq; // maxheap {timestamp, tweetId}
+        priority_queue<pair<int, int>> pq; // time -> tweet
         vector<int> feed;
 
-        // self 
-        for(const auto& tweet : tweets[userId]) pq.push(tweet);
+        for(auto &tweet : tweets[userId]){
+            pq.push({tweet.first, tweet.second});
+        }
 
-        // following
-        for(const auto& user_id : following[userId]) {
-            for (const auto& tweet : tweets[user_id]) {
-                pq.push(tweet);
+        for(auto &f : following[userId]){
+            for(auto &tweet : tweets[f]){
+                pq.push({tweet.first, tweet.second});
             }
         }
 
-        for(int i = 0; i < 10 && !pq.empty(); i++) {
+        for(int i=0; i<10 && !pq.empty(); i++){
             feed.push_back(pq.top().second);
             pq.pop();
         }
 
         return feed;
-
     }
     
     void follow(int followerId, int followeeId) {
