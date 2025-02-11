@@ -1,24 +1,40 @@
 class Solution {
 public:
     string removeOccurrences(string s, string part) {
-        // int n = part.length();
+        int n = part.length();
 
-        // stack<char> st;
+        reverse(part.begin(), part.end());
+        stack<char> st;
 
-        // for(char c : s){
-        //     if(!st.empty() && c == 'c'){
-        //         string str = "";
-
-        //         while(!st.empty()){
-
-        //         }
-        //     }else{
-        //         st.push(c);
-        //     }
-        // }
-        while(s.find(part) != string::npos) {
-            s.erase(s.find(part), part.size());
+        for(char c : s){
+            if(c == part[0]){
+                string str = "";
+                str += c;
+                int i = 0;
+                while(!st.empty() && i<n-1){
+                    str += st.top();
+                    i++;
+                    st.pop();
+                }
+                
+                if(str == part){
+                continue;
+                }    
+                else {
+                    reverse(str.begin(), str.end());
+                    for(char c : str) st.push(c);
+                }
+                
+            }else{
+                st.push(c);
+            }
         }
-        return s;
+
+        string res = "";
+
+        while(!st.empty()) res+=st.top(), st.pop();
+
+        reverse(res.begin(), res.end());
+        return res;
     }
 };
