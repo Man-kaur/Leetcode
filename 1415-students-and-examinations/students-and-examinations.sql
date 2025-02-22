@@ -1,21 +1,20 @@
+# Write your MySQL query statement below
 SELECT
     st.student_id,
     st.student_name,
-    su.subject_name,
-    COUNT(e.student_id) as attended_exams
+    sub.subject_name,
+    COUNT(exam.subject_name) as attended_exams
 FROM
-    students st
+    Students st
 CROSS JOIN
-    subjects su
+    Subjects sub
 LEFT JOIN
-    examinations e
-    ON st.student_id = e.student_id
-    AND su.subject_name = e.subject_name
+    Examinations exam
+ON  st.student_id = exam.student_id
+    AND sub.subject_name = exam.subject_name
 GROUP BY
-    st.student_id,
     st.student_name,
-    su.subject_name
+    sub.subject_name
 ORDER BY
-    st.student_id ASC,
-    su.subject_name ASC
-;
+    st.student_id ASC, sub.subject_name ASC
+    ;
