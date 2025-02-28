@@ -1,7 +1,7 @@
 class Solution {
 public:
 
-    int helper(vector<int> nums, vector<int> &dp, int i){
+    int helper(vector<int> &nums, vector<int> &dp, int i){
         if(i < 0) return 0;
 
         if(dp[i] != -1) return dp[i];
